@@ -9,7 +9,8 @@ let pY = 720;
 let xPos = 200;
 let yPos = 200;
 let lives = 3;
-
+let line1 = (350, 550, 600, 550)
+let move = 5;
 
 function setup() {
   //This function get run once at the start of the program
@@ -25,6 +26,7 @@ function setup() {
 
 function draw() {
   background(220);
+  strokeWeight(15);{
   //line 1
   line(350, 550, 600, 550)
   //line 2
@@ -105,6 +107,10 @@ function draw() {
   line(390, 275, 540, 275)
   //line 40
   line(460, 275, 460, 370)
+  //line 41
+  line(5,410,5,575)
+  //line 42
+  line(860,400,860,600)
   //rect 1
   fill('black')
   rect(100, 80, 100, 80)
@@ -114,11 +120,26 @@ function draw() {
   rect(550, 80, 100, 80)
   //rect 4
   rect(750, 80, 100, 80)
-
+}
   if (xPos > 875) {
     xPos = -100
     yPos = random(40, 360)
   }
+  // coullisn
+  if(pX < 0){
+    pX = pX + 5;
+  }
+  if(pX > width){
+    pX = pX - 5;
+  }
+  if(pY < 0){
+    pY = pY + 5;
+  }
+  if(pY > height){
+    pY = pY - 5;
+  }
+
+
   movePlayer();
   drawPlayer(pX, pY);
   text(mouseX + ", " + mouseY, 20, 20);
@@ -127,6 +148,7 @@ function draw() {
 
 
 function drawPlayer(x, y) {
+  strokeWeight(0);
   fill('yellow');
   ellipse(x, y, 40, 40);
 }
@@ -176,3 +198,4 @@ function playerlives(Life) {
 
   }
 }
+
