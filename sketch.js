@@ -159,8 +159,6 @@ function draw()   {
   fill("black")
   text(mouseX + ", " + mouseY, 20, 20);
   text(pX + ", " + pY, 70, 20);
-
-
 }
 
 
@@ -221,11 +219,9 @@ function playerlives(Life) {
       score = 0;
     }
   text("score" + score, 100, 100);  
-  }
-  function animate(){
-    if(player.position.y-player.radius<=boundary.position.y + boundary.height && player.position.x + player.radius >= boundary.position.x && player.position.y + player.radius >= boundary.position.y && player.postion.x -player.radius <= boundary.postion.x + boundary.width)
-  }
+ }
+} 
+ function animate(){
+  if(player.position.y-player.radius<=boundary.position.y + boundary.height && player.position.x + player.radius >= boundary.position.x && player.position.y + player.radius >= boundary.position.y && player.postion.x -player.radius <= boundary.postion.x + boundary.width){
 }
-
-
-
+}
