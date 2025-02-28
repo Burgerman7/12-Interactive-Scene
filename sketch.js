@@ -15,6 +15,7 @@ let score =0;
 //              hori vert 
 let direction = [0, 0]
 
+
 function setup() {
   //This function get run once at the start of the program
   createCanvas(880, 940);
@@ -221,5 +222,10 @@ function playerlives(Life) {
     }
   text("score" + score, 100, 100);  
   }
+  function animate(){
+    if(player.position.y-player.radius<=boundary.position.y + boundary.height && player.position.x + player.radius >= boundary.position.x && player.position.y + player.radius >= boundary.position.y && player.postion.x -player.radius <= boundary.postion.x + boundary.width)
+  }
 }
+
+
 
