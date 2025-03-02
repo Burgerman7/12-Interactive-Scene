@@ -27,7 +27,7 @@ function setup() {
   //Set the number of frames per second
   frameRate(15);
 }
-100
+
 function draw()   {
   background(220);
   strokeWeight(5); {
@@ -159,6 +159,8 @@ function draw()   {
   fill("black")
   text(mouseX + ", " + mouseY, 20, 20);
   text(pX + ", " + pY, 70, 20);
+
+
 }
 
 
@@ -171,16 +173,16 @@ function drawPlayer(x, y) {
 
 function movePlayer() {
   if (keyIsDown(87) || keyIsDown(UP_ARROW)) { // w key
-    direction = [0, -1];
+    pY -=5
   }
   if (keyIsDown(83) || keyIsDown(DOWN_ARROW)) { // s key
-    direction = [0, 1];
+    pY +=5
   }
   if (keyIsDown(65) || keyIsDown(LEFT_ARROW)) { // a key
-    direction = [-1, 0];
+    pX -=5
   }
   if (keyIsDown(68) || keyIsDown(RIGHT_ARROW)) { // d key
-    direction = [1, 0];
+    pX +=100
   }
   if (keyIsDown(32)) { // d key
     direction = [0, 0];
@@ -218,10 +220,98 @@ function playerlives(Life) {
       lives = 3;
       score = 0;
     }
-  text("score" + score, 100, 100);  
- }
-} 
- function animate(){
-  if(player.position.y-player.radius<=boundary.position.y + boundary.height && player.position.x + player.radius >= boundary.position.x && player.position.y + player.radius >= boundary.position.y && player.postion.x -player.radius <= boundary.postion.x + boundary.width){
+    text("score" + score, 100, 100);  
+  }
 }
+function checkCollision(newX, newY) {
+  let pacRadius = 20; // Pac-Man's size (ellipse radius)
+
+  for (let wall of walls) {
+    let x1 = wall.x1, y1 = wall.y1, x2 = wall.x2, y2 = wall.y2;
+
+    // Find the nearest point on the wall segment
+    let nearestX = constrain(newX, Math.min(x1, x2), Math.max(x1, x2));
+    let nearestY = constrain(newY, Math.min(y1, y2), Math.max(y1, y2));
+
+    // Calculate distance from Pac-Man's center to nearest wall point
+    let distance = dist(newX, newY, nearestX, nearestY);
+    
+    // If the distance is less than Pac-Man's radius, there's a collision
+    if (distance < pacRadius) {
+      return true; // Collision detected, don't move Pac-Man
+    }
+  }
+  return false; // No collision, movement is allowed
 }
+function movePlayer() {
+  let newX = pX, newY = pY;
+
+  if (keyIsDown(87) || keyIsDown(UP_ARROW)) { // W key (Up)
+    newY -= 5;
+  }
+  if (keyIsDown(83) || keyIsDown(DOWN_ARROW)) { // S key (Down)
+    newY += 5;
+  }
+  if (keyIsDown(65) || keyIsDown(LEFT_ARROW)) { // A key (Left)
+    newX -= 5;
+  }
+  if (keyIsDown(68) || keyIsDown(RIGHT_ARROW)) { // D key (Right)
+    newX += 5;
+  }
+
+  // Ensure Pac-Man does not move through walls
+  if (!checkCollision(newX, newY)) {
+    pX = newX;
+    pY = newY;
+  }
+}
+let walls = [
+  { x1: 350, y1: 550, x2: 600, y2: 550 },  // Line 1
+  { x1: 350, y1: 450, x2: 350, y2: 550 },  // Line 2
+  { x1: 600, y1: 450, x2: 600, y2: 550 },  // Line 3
+  { x1: 350, y1: 450, x2: 435, y2: 450 },  // Line 4
+  { x1: 600, y1: 450, x2: 500, y2: 450 },  // Line 5
+  { x1: 350, y1: 615, x2: 600, y2: 615 },  // line 6
+  { x1: 480, y1: 615, x2: 480, y2: 690 },  // Line 7
+  { x1: 5, y1: 0, x2: 5, y2: 400 },        // line 8
+  { x1: 5, y1: 500, x2: 175, y2: 500 },    // line 9
+  { x1: 5, y1: 585, x2: 5, y2: 1000 },     // line 10
+  { x1: 860, y1: 0, x2: 860, y2: 400 },    // Line 11
+  { x1: 860, y1: 480, x2: 730, y2: 480 },  // Line 12
+  { x1: 860, y1: 600, x2: 860, y2: 1000 },  //line 13
+  { x1: 670, y1: 515, x2: 290, y2: 625 },   //line 14
+  { x1: 290, y1: 515, x2: 290, y2: 625 },   //line 15
+  { x1: 540, y1: 685, x2: 640, y2: 685 },   // line 16
+  { x1: 290, y1: 685, x2: 410, y2: 685 },   // line 17
+  { x1: 5, y1: 930, x2: 860, y2: 930 },     // line 18
+  { x1: 5, y1: 5, x2: 860, y2: 5 },         //line 19
+  { x1: 5, y1: 750, x2: 95, y2: 750 },      //line 20
+  { x1: 860, y1: 750, x2: 775, y2: 750 },  // line 21
+  { x1: 360, y1: 750, x2: 590, y2: 750 },    // line 22
+  { x1: 480, y1: 750, x2: 480, y2: 850 },   // line 23
+  { x1: 100, y1: 210, x2: 175, y2: 210 },   // line 24
+  { x1: 650, y1: 210, x2: 730, y2: 210 },  // line 25
+  { x1: 175, y1: 750, x2: 175, y2: 640 },  // line 26
+  { x1: 125, y1: 640, x2: 175, y2: 640 },  // line 27
+  { x1: 720, y1: 750, x2: 720, y2: 640 },  // line 28
+  { x1: 720, y1: 640, x2: 770, y2: 640 },  // line 29
+  { x1: 590, y1: 850, x2: 740, y2: 850 },  // line 30
+  { x1: 650, y1: 850, x2: 650, y2: 750 },  // line 31
+  { x1: 375, y1: 850, x2: 220, y2: 850 },  // line 32
+  { x1: 300, y1: 850, x2: 300, y2: 750 },  // line 33
+  { x1: 280, y1: 305, x2: 280, y2: 435 }, // line 34
+  { x1: 280, y1: 370, x2: 370, y2: 370 }, // line 35
+  { x1: 670, y1: 305, x2: 670, y2: 435 },  //line 36
+  { x1: 670, y1: 370, x2: 540, y2: 370 },  // line 37
+  { x1: 430, y1: 5, x2: 430, y2: 160 },  // line 38
+  { x1: 390, y1: 275, x2: 540, y2: 275 },  // line 39
+  { x1: 460, y1: 275, x2: 460, y2: 370 },  // line 40
+  { x1: 5, y1: 400, x2: 5, y2: 590 },     // line 41
+  { x1: 860, y1: 400, x2: 860, y2: 600 },  // line 42
+  { x1: 5, y1: 340, x2: 175, y2: 340 },   // line 43
+  { x1: 120, y1: 930, x2: 120, y2: 825 },  // line 44
+  { x1: 5, y1: 0, x2: 5, y2: 400 },        // Left border
+  { x1: 5, y1: 500, x2: 175, y2: 500 }     // Bottom border
+  
+];
+
