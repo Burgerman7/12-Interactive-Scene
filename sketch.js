@@ -46,7 +46,7 @@ function setup() {
 
   setupPellets();
 }
-600, 620
+
 function draw()   {
   background(220);
   strokeWeight(5); {
@@ -287,24 +287,24 @@ function playerlives(Life) {
 }
 
 function checkCollision(newX, newY) {
-  let pacRadius = 20; // Pac-Man's size (ellipse radius)
+  let pacRadius = 20; // Pac-Man's size 
 
   for (let wall of walls) {
     let x1 = wall.x1, y1 = wall.y1, x2 = wall.x2, y2 = wall.y2;
 
-    // Find the nearest point on the wall segment
+    
     let nearestX = constrain(newX, Math.min(x1, x2), Math.max(x1, x2));
     let nearestY = constrain(newY, Math.min(y1, y2), Math.max(y1, y2));
 
-    // Calculate distance from Pac-Man's center to nearest wall point
+    
     let distance = dist(newX, newY, nearestX, nearestY);
     
-    // If the distance is less than Pac-Man's radius, there's a collision
+    
     if (distance < pacRadius) {
-      return true; // Collision detected, don't move Pac-Man
+      return true; // Collision detected
     }
   }
-  return false; // No collision, movement is allowed
+  return false; // No collision
 }
 function movePlayer() {
   let newX = pX, newY = pY;
@@ -373,7 +373,7 @@ function moveGhostsChase() {
       let newX = ghostX + dir.dx;
       let newY = ghostY + dir.dy;
 
-      if (!checkCollision(newX, newY)) { // Check if movement is valid
+      if (!checkCollision(newX, newY)) { 
         let newDistance = dist(newX, newY, pX, pY);
 
         if (ghostType === "cyan") {
@@ -384,7 +384,6 @@ function moveGhostsChase() {
           }
         } 
         else if (ghostType === "pink") {
-          //  Pink Ghost: Predictive Chase (Move 40 pixels ahead)
           let predictedX = pX + (direction[0] * 40);
           let predictedY = pY + (direction[1] * 40);
           let predictedDistance = dist(newX, newY, predictedX, predictedY);
@@ -394,7 +393,6 @@ function moveGhostsChase() {
           }
         } 
         else if (ghostType === "orange") {
-          //  Orange Ghost: Chase if far, run away if close
           if (newDistance > 150) { // Chase if far
             if (newDistance < shortestDistance) {
               shortestDistance = newDistance;
@@ -408,7 +406,6 @@ function moveGhostsChase() {
           }
         } 
         else if (ghostType === "red") {
-          //  Red Ghost: Random until close, then aggressive chase
           if (newDistance < 200) {
             if (newDistance < shortestDistance) {
               shortestDistance = newDistance;
@@ -424,22 +421,22 @@ function moveGhostsChase() {
     return bestDirection;
   }
 
-  // Move Cyan Ghost (Direct Chase)
+  // Move Cyan Ghost 
   ghostDirectionCyan = moveChasingGhost(eX, eY, ghostDirectionCyan, "cyan");
   eX += ghostDirectionCyan.dx;
   eY += ghostDirectionCyan.dy;
 
-  // Move Pink Ghost (Predictive Chase)
+  // Move Pink Ghost 
   ghostDirectionPink = moveChasingGhost(eX1, eY1, ghostDirectionPink, "pink");
   eX1 += ghostDirectionPink.dx;
   eY1 += ghostDirectionPink.dy;
 
-  // Move Orange Ghost (Scared Ghost)
+  // Move Orange Ghost 
   ghostDirectionOrange = moveChasingGhost(eX2, eY2, ghostDirectionOrange, "orange");
   eX2 += ghostDirectionOrange.dx;
   eY2 += ghostDirectionOrange.dy;
 
-  // Move Red Ghost (Aggressive Chase)
+  // Move Red Ghost 
   ghostDirectionRed = moveChasingGhost(eX3, eY3, ghostDirectionRed, "red");
   eX3 += ghostDirectionRed.dx;
   eY3 += ghostDirectionRed.dy;
@@ -455,9 +452,9 @@ function moveGhostChase() {
   ];
 
   let bestDirection = ghostDirection;
-  let shortestDistance = dist(eX, eY, pX, pY); // Distance to Pac-Man
+  let shortestDistance = dist(eX, eY, pX, pY); 
 
-  // Check all possible moves
+  
   for (let dir of directions) {
     let newX = eX + dir.dx;
     let newY = eY + dir.dy;
@@ -475,7 +472,7 @@ function moveGhostChase() {
   
   eX += bestDirection.dx;
   eY += bestDirection.dy;
-  ghostDirection = bestDirection; // Update direction
+  ghostDirection = bestDirection; 
 }
 
 function moveGhostChase1() {
@@ -487,7 +484,7 @@ function moveGhostChase1() {
   ];
 
   let bestDirection = ghostDirection;
-  let shortestDistance = dist(eX1, eY1, pX, pY); // Distance to Pac-Man
+  let shortestDistance = dist(eX1, eY1, pX, pY); 
 
   // Check all possible moves
   for (let dir of directions) {
@@ -507,7 +504,7 @@ function moveGhostChase1() {
   
   eX1 += bestDirection.dx;
   eY1 += bestDirection.dy;
-  ghostDirection = bestDirection; // Update direction
+  ghostDirection = bestDirection; 
 }
 
 function moveGhostChase2() {
@@ -519,9 +516,9 @@ function moveGhostChase2() {
   ];
 
   let bestDirection = ghostDirection;
-  let shortestDistance = dist(eX2, eY2, pX, pY); // Distance to Pac-Man
+  let shortestDistance = dist(eX2, eY2, pX, pY); 
 
-  // Check all possible moves
+  
   for (let dir of directions) {
     let newX = eX2 + dir.dx;
     let newY = eY2 + dir.dy;
@@ -539,7 +536,7 @@ function moveGhostChase2() {
   
   eX2 += bestDirection.dx;
   eY2 += bestDirection.dy;
-  ghostDirection = bestDirection; // Update direction
+  ghostDirection = bestDirection; 
 }
 
 function moveGhostChase3() {
@@ -551,9 +548,9 @@ function moveGhostChase3() {
   ];
 
   let bestDirection = ghostDirection;
-  let shortestDistance = dist(eX3, eY3, pX, pY); // Distance to Pac-Man
+  let shortestDistance = dist(eX3, eY3, pX, pY); 
 
-  // Check all possible moves
+  
   for (let dir of directions) {
     let newX = eX3 + dir.dx;
     let newY = eY3 + dir.dy;
@@ -571,7 +568,7 @@ function moveGhostChase3() {
   
   eX3 += bestDirection.dx;
   eY3 += bestDirection.dy;
-  ghostDirection = bestDirection; // Update direction
+  ghostDirection = bestDirection; 
 }
 
 function checkGhostCollision() {
@@ -668,7 +665,7 @@ let walls = [
 ];
 
 
-let pellets = [];  // Array to store pellet positions
+let pellets = [];  
 
 function setupPellets() {
   for (let i = 40; i < width - 40; i += 40) {  
@@ -689,7 +686,7 @@ function drawPellets() {
   noStroke();
   for (let pellet of pellets) {
     if (!pellet.eaten) {  
-      ellipse(pellet.x, pellet.y, 15, 15); // Draw pellet
+      ellipse(pellet.x, pellet.y, 15, 15); 
     }
   }
 }
@@ -704,7 +701,7 @@ function moveGhostsChase() {
 
   function moveGhost(ghostX, ghostY, ghostDirection) {
     let bestDirection = ghostDirection;
-    let bestDistance = scaredMode ? -Infinity : Infinity; // Change behavior when scared
+    let bestDistance = scaredMode ? -Infinity : Infinity; 
 
     for (let dir of directions) {
       let newX = ghostX + dir.dx;
@@ -720,7 +717,6 @@ function moveGhostsChase() {
             bestDirection = dir;
           }
         } else {
-          // Normal behavior: Chase Pac-Man
           if (distance < bestDistance) {
             bestDistance = distance;
             bestDirection = dir;
@@ -807,7 +803,7 @@ function setupPellets() {
   for (let i = 40; i < width - 40; i += 40) {  
     for (let j = 40; j < height - 40; j += 40) {
       if (!checkCollision(i, j)) { 
-        let isPowerPellet = (i % (width - 80) === 40 && j % (height - 80) === 40); // Place power pellets in 4 corners
+        let isPowerPellet = (i % (width - 80) === 40 && j % (height - 80) === 40); 
         pellets.push({ x: i, y: j, eaten: false, power: isPowerPellet });
       }
     }
@@ -831,7 +827,7 @@ function checkGhostCollision() {
     if (distance < pacRadius + ghostSize / 2) {
       if (scaredMode) {
         eatGhost(ghost.name); // Eat ghost if scared
-        return false; // Ghost eaten, no collision
+        return false; // Ghost eaten
       } else {
         return true; // Collision, Pac-Man loses a life
       }
